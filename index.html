@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Document</title>
+	<link href="asset/style.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="mainDiv">
+
+  <div class="innerChk">
+  	<div class="term" data-term="Term one">
+  	  <span class="head">Term one</span>
+  	  <span class="selectedItem"></span>
+  	</div>
+  	<div class="els" style="display: none">
+  		<div class="elsWrap">
+	  		<span>
+				  <input type="radio" class="radioBtn" id="one" name="term_1" value="one">
+				  <label for="one">One</label>
+			  </span>
+			  <span>
+				  <input type="radio" class="radioBtn" id="two" name="term_1" value="two">
+				  <label for="two">Two</label><br>
+			  </span>
+			  <span>
+				  <input type="radio" class="radioBtn" id="three" name="term_1" value="three">
+				  <label for="three">Three</label>
+				</span>
+		  </div>
+		</div>
+  </div>
+
+  <div class="innerChk">
+  	<div class="term" data-term="Term two">
+  	  <span class="head">Term two</span>
+  	  <span class="selectedItem"></span>  	
+    </div>
+  	<div class="els" style="display: none">
+  		<div class="elsWrap">
+	  		<span>
+				  <input type="radio" class="radioBtn" id="one" name="term_2" value="one">
+				  <label for="one">One</label>
+			  </span>
+			  <span>
+				  <input type="radio" class="radioBtn" id="two" name="term_2" value="two">
+				  <label for="two">Two</label><br>
+			  </span>
+			  <span>
+				  <input type="radio" class="radioBtn" id="three" name="term_2" value="three">
+				  <label for="three">Three</label>
+				</span>
+			</div>
+		</div>
+  </div> 
+  
+  <div class="innerChk">
+  	<div class="term" data-term="Term three">
+  	  <span class="head">Term three</span>
+  	  <span class="selectedItem"></span>  	  	  
+  	</div>
+  	<div class="els" style="display: none">
+  		<div class="elsWrap">
+	  		<span>
+				  <input type="radio" class="radioBtn" id="one" name="term_3" value="one">
+				  <label for="one">One</label>
+			  </span>
+			  <span>
+				  <input type="radio" class="radioBtn" id="two" name="term_3" value="two">
+				  <label for="two">Two</label><br>
+			  </span>
+			  <span>
+				  <input type="radio" class="radioBtn" id="three" name="term_3" value="three">
+				  <label for="three">Three</label>
+				</span>
+			</div>
+		</div>
+  </div>   
+
+  <div class="innerChk innerChkTxt">
+  	<div class="term" data-term="Term four">
+  	  <span class="head">Term four</span>
+  	  <span class="selectedItem"></span>  	  	  
+  	</div>
+  	<div class="els" style="display: none">
+  		<div class="elsTextWrap">
+	  		<span>
+	  			<label for="width">Width</label>
+				  <input type="text" id="width" class="txtInput" name="width" placeholder="ex: 36">
+				  <span class="mes">inch</span>
+			  </span>
+			  <span>
+	  			<label for="height">Height</label>
+				  <input type="text" id="height" class="txtInput" name="height" placeholder="ex: 36">
+				  <span class="mes">inch</span>
+			  </span>
+			  <span>
+	  			<label for="thikness">Thikness</label>
+				  <input type="text" id="thikness" class="txtInput" name="thikness" placeholder="ex: 36">
+				  <span class="mes">inch</span>
+			  </span>			  
+			  <span>
+	  			<label for="bredth">Bredth</label>
+				  <input type="text" id="bredth" class="txtInput" name="bredth" placeholder="ex: 36">
+				  <span class="mes">inch</span>
+			  </span>				  
+			</div>
+		</div>
+  </div>  
+
+  <button class="clickMe">Click me!</button>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $(".term").click(function(){
+    	$(this).siblings().slideToggle();
+    });
+
+    let arr = [];
+
+		function removeDuplicates(originalArray, prop) {
+     var newArray = [];
+     var lookupObject  = {};
+
+     for(var i in originalArray) {
+        lookupObject[originalArray[i][prop]] = originalArray[i];
+     }
+
+     for(i in lookupObject) {
+         newArray.push(lookupObject[i]);
+     }
+      return newArray;
+		}
+
+    $(".radioBtn").change(function(){
+    	arr.push({name: $(this).attr('name'), value: $(this).val()});
+    	$(this).parents(".els").slideUp();
+    	$(this).parents(".innerChk").find(".selectedItem").html($(this).val());
+    	$(this).parents(".innerChk").next('.innerChk').find('.els').slideDown();
+
+
+    	if($(this).is(':checked')){
+    		$(this).parents(".innerChk").addClass('active');
+    	}else{
+    		$(this).parents(".innerChk").removeClass('active');
+    	}
+    })
+
+		var innerArr = [];
+
+		$(".txtInput").blur(function(){
+    	arr.push({name: $(this).attr('name'), value: $(this).val()});
+			innerArr.push({name: $(this).attr('name'), value: $(this).val()});
+
+			var uniqueArray1 = removeDuplicates(innerArr, "name");
+			var newArr = [];
+			var i = 0;
+
+			$(uniqueArray1).each(function(index, newArr1){
+				newArr.push(newArr1.value);
+				i++
+			})
+
+			$(this).parents(".innerChk").find(".selectedItem").html(newArr.join(" X "));
+			if(newArr.length >= 1){
+				$(this).parents(".innerChk").addClass('active');
+			}else{
+    		$(this).parents(".innerChk").removeClass('active');
+    	}
+
+    	if($('.innerChkTxt .elsTextWrap > span').length == newArr.length){
+				$(this).parents(".els").slideUp();
+				$(this).parents(".innerChk").next('.innerChk').find('.els').slideDown();
+    	}
+
+    });
+
+    $(".clickMe").click(function(){
+				var uniqueArray2 = removeDuplicates(arr, "name");
+				console.log(uniqueArray2);
+    })    
+
+  });
+</script>
+
+</body>
+</html>
