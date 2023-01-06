@@ -155,8 +155,13 @@
 		var innerArr = [];
 
 		$(".txtInput").blur(function(){
-    	arr.push({name: $(this).attr('name'), value: $(this).val()});
-			innerArr.push({name: $(this).attr('name'), value: $(this).val()});
+
+	   if(!$.trim($(this).val())){
+	       // trimmed value is truthy meaning real characters are entered
+	    }else{
+	    	arr.push({name: $(this).attr('name'), value: $.trim($(this).val())});
+				innerArr.push({name: $(this).attr('name'), value: $(this).val()});
+	    }
 
 			var uniqueArray1 = removeDuplicates(innerArr, "name");
 			var newArr = [];
@@ -174,9 +179,11 @@
     		$(this).parents(".innerChk").removeClass('active');
     	}
 
-    	if($('.innerChkTxt .elsTextWrap > span').length == newArr.length){
+    	if($('.innerChkTxt .elsTextWrap > span').length != newArr.length){
+
+    	}else{
 				$(this).parents(".els").slideUp();
-				$(this).parents(".innerChk").next('.innerChk').find('.els').slideDown();
+				$(this).parents(".innerChk").next('.innerChk').find('.els').slideDown();    		
     	}
 
     });
