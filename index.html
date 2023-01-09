@@ -111,7 +111,79 @@
 		</div>
   </div>  
 
-  <button class="clickMe">Click me!</button>
+  <div class="innerChk innerChkfilter">
+  	<div class="term" data-term="Term five">
+  	  <span class="head">Term five</span>
+  	  <span class="selectedItem"></span>  	  	  
+  	</div>
+  	<div class="els" style="display: none">
+  		<div class="elsFiltWrap">
+
+				<select class="cl_availability" id="ddlAvailability">
+				    <option value="all">Availability</option>
+				    <option value="available">Available</option>
+				    <option value="unavailable">Unavailable</option>
+				</select>
+				<select class="cl_uses" id="ddlUses">
+				    <option value="all">All Uses</option>
+				    <option value="one">One</option>
+				    <option value="two">Two</option>
+				    <option value="three">Three</option>
+				</select>
+				<select class="cl_brands" id="ddlBrands">
+				    <option value="all">All Brands</option>
+				    <option value="one">One</option>
+				    <option value="two">Two</option>
+				    <option value="three">Three</option>
+				</select>
+				<select class="cl_color" id="ddlColor">
+				    <option value="all">All Colors</option>
+				    <option value="one">One</option>
+				    <option value="two">Two</option>
+				    <option value="three">Three</option>
+				</select>		
+				<select class="cl_patterns" id="ddlPatterns">
+				    <option value="all">All Patterns</option>
+				    <option value="one">One</option>
+				    <option value="two">Two</option>
+				    <option value="three">Three</option>
+				</select>	
+				<span class="resetFilt"> </span>
+			</div>										
+
+			<ul class="filtResults">
+				<li cl_availability="available" cl_uses="three" cl_brands="two" cl_color="one" cl_patterns="two"><span><input type="radio" class="radioBtn" id="one" name="term_5" value="one"><label for="one">One</label></span></li>
+
+				<li cl_availability="available" cl_uses="two" cl_brands="three" cl_color="two" cl_patterns="one"><span><input type="radio" class="radioBtn" id="two" name="term_5" value="two"><label for="one">Two</label></span></li>
+
+				<li cl_availability="unavailable" cl_uses="one" cl_brands="one" cl_color="three" cl_patterns="three"><span><input type="radio" class="radioBtn" id="three" name="term_5" value="three"><label for="one">Three</label></span></li>
+
+				<li cl_availability="available" cl_uses="three" cl_brands="two" cl_color="one" cl_patterns="two"><span><input type="radio" class="radioBtn" id="four" name="term_5" value="four"><label for="one">Four</label></span></li>
+
+				<li cl_availability="unavailable" cl_uses="two" cl_brands="three" cl_color="two" cl_patterns="one"><span><input type="radio" class="radioBtn" id="five" name="term_5" value="five"><label for="one">Five</label></span></li>
+
+				<li cl_availability="available" cl_uses="one" cl_brands="one" cl_color="three" cl_patterns="three"><span><input type="radio" class="radioBtn" id="six" name="term_5" value="six"><label for="one">Six</label></span></li>
+
+				<li cl_availability="available" cl_uses="three" cl_brands="two" cl_color="one" cl_patterns="two"><span><input type="radio" class="radioBtn" id="seven" name="term_5" value="seven"><label for="one">Seven</label></span></li>
+
+				<li cl_availability="available" cl_uses="two" cl_brands="three" cl_color="two" cl_patterns="one"><span><input type="radio" class="radioBtn" id="eight" name="term_5" value="eight"><label for="one">Eight</label></span></li>
+
+				<li cl_availability="unavailable" cl_uses="one" cl_brands="one" cl_color="three" cl_patterns="three"><span><input type="radio" class="radioBtn" id="nine" name="term_5" value="nine"><label for="one">Nine</label></span></li>
+
+				<li cl_availability="available" cl_uses="three" cl_brands="three" cl_color="one" cl_patterns="two"><span><input type="radio" class="radioBtn" id="ten" name="term_5" value="ten"><label for="one">Ten</label></span></li>
+			</ul>
+
+		</div>
+  </div> 
+
+  <div class="innerAddTxt">
+  	<div class="innerAddTxtWrap">
+	  	<label for="adInfo">Additional information</label>
+			<textarea id="adInfo" name="additional-info" rows="6"> </textarea>
+	  </div>
+  </div>  
+
+  <button class="clickMe">Click me</button>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -138,6 +210,73 @@
       return newArray;
 		}
 
+    function SearchData(availability, uses, brands, colors, patterns) {
+        if (availability.toUpperCase() == 'ALL' && uses.toUpperCase() == 'ALL' && brands.toUpperCase() == 'ALL' && colors.toUpperCase() == 'ALL' && patterns.toUpperCase() == 'ALL') {
+            $('.filtResults li').show();
+        } else {
+            $('.filtResults li').each(function () {
+                var r_availability = $.trim($(this).attr('cl_availability'));
+                var r_uses = $.trim($(this).attr('cl_uses'));
+                var r_brands = $.trim($(this).attr('cl_brands'));
+                var r_colors = $.trim($(this).attr('cl_color'));
+                var r_patterns = $.trim($(this).attr('cl_patterns'));                                                
+
+                if (availability.toUpperCase() != 'ALL' && uses.toUpperCase() != 'ALL' && brands.toUpperCase() != 'ALL' && colors.toUpperCase() != 'ALL' && patterns.toUpperCase() != 'ALL') {
+                    if (r_availability.toUpperCase() == availability.toUpperCase() && r_uses.toUpperCase() == uses.toUpperCase() && r_brands.toUpperCase() == brands.toUpperCase() && r_colors.toUpperCase() == colors.toUpperCase() && r_patterns.toUpperCase() == patterns.toUpperCase()) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                } else if (r_availability != '' || r_uses != '' || r_brands != '' || r_colors != '' || r_patterns != '') {
+                    if (availability != 'all') {
+                        if (r_availability.toUpperCase() == availability.toUpperCase()) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    }
+                    if (uses != 'all') {
+                        if (r_uses.toUpperCase() == uses.toUpperCase()) {
+                            $(this).show();
+                        }
+                        else {
+                            $(this).hide();
+                        }
+                    }
+                    if (brands != 'all') {
+                        if (r_brands.toUpperCase() == brands.toUpperCase()) {
+                            $(this).show();
+                        }
+                        else {
+                            $(this).hide();
+                        }
+                    }
+                    if (colors != 'all') {
+                        if (r_colors.toUpperCase() == colors.toUpperCase()) {
+                            $(this).show();
+                        }
+                        else {
+                            $(this).hide();
+                        }
+                    }
+                    if (patterns != 'all') {
+                        if (r_patterns.toUpperCase() == patterns.toUpperCase()) {
+                            $(this).show();
+                        }
+                        else {
+                            $(this).hide();
+                        }
+                    }                    
+                }
+
+            });
+        }
+    }
+
+    $(".resetFilt").click(function(){
+			$('.filtResults li').show();
+    })
+
     $(".radioBtn").change(function(){
     	arr.push({name: $(this).attr('name'), value: $(this).val()});
     	$(this).parents(".els").slideUp();
@@ -156,7 +295,7 @@
 
 		$(".txtInput").blur(function(){
 
-	   if(!$.trim($(this).val())){
+	    if(!$.trim($(this).val())){
 	       // trimmed value is truthy meaning real characters are entered
 	    }else{
 	    	arr.push({name: $(this).attr('name'), value: $.trim($(this).val())});
@@ -188,10 +327,27 @@
 
     });
 
+    $("#adInfo").blur(function(){
+	    if(!$.trim($(this).val())){
+	       // trimmed value is truthy meaning real characters are entered
+	    }else{
+	    	arr.push({name: $(this).attr('name'), value: $.trim($(this).val())});
+	    }    	
+    });
+
+    $("#ddlAvailability, #ddlUses, #ddlBrands, #ddlColor, #ddlPatterns").on("change", function () {
+        var availability = $('#ddlAvailability').find("option:selected").val();
+        var uses = $('#ddlUses').find("option:selected").val();
+        var brands = $('#ddlBrands').find("option:selected").val();
+        var colors = $('#ddlColor').find("option:selected").val();
+        var patterns = $('#ddlPatterns').find("option:selected").val();                        
+        SearchData(availability, uses, brands, colors, patterns)
+    });
+
     $(".clickMe").click(function(){
 				var uniqueArray2 = removeDuplicates(arr, "name");
 				console.log(uniqueArray2);
-    })    
+    })
 
   });
 </script>
